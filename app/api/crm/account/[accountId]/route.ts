@@ -1,3 +1,4 @@
+// file: nextcrm/app/api/crm/account/[accountId]/route.ts
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 

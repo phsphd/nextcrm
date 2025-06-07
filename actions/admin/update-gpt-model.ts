@@ -1,3 +1,8 @@
+// file: nextcrm/actions/admin/update-gpt-model.ts  
+/*This action updates the status of a GPT model in the database.
+It first sets all GPT models to inactive and then sets the specified model to active.
+*/  
+
 "use server";
 
 import { prismadb } from "@/lib/prisma";

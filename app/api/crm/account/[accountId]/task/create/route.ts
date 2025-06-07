@@ -1,3 +1,4 @@
+// file: nextcrm/app/api/crm/account/[accountId]/task/create/route.ts
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -76,19 +77,23 @@ export async function POST(req: Request) {
       }
     }
 
-    //Notification to user who are account watchers
+    // 🔴 MODIFIED: Query account watchers using junction table instead of array field
     try {
       const emailRecipients = await prismadb.users.findMany({
         where: {
-          //Send to all users watching the board except the user who created the comment
+          //Send to all users watching the account except the user who created the task
           id: {
             not: session.user.id,
           },
-          watching_accountsIDs: {
-            has: account,
+          // 🔴 MODIFIED: Use junction table relationship instead of watching_accountsIDs array
+          watching_accounts: {
+            some: {
+              accountId: account,
+            },
           },
         },
       });
+
       //Create notifications for every user watching the specific account except the user who created the task
       for (const userID of emailRecipients) {
         const user = await prismadb.users.findUnique({
@@ -118,12 +123,13 @@ export async function POST(req: Request) {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log("[ACCOUNT_WATCHERS_NOTIFICATION]", error);
     }
 
-    return NextResponse.json({ status: 200 });
+    // 🔴 MODIFIED: Return the created task instead of just status
+    return NextResponse.json({ task }, { status: 200 });
   } catch (error) {
-    console.log("[NEW_BOARD_POST]", error);
+    console.log("[NEW_ACCOUNT_TASK_POST]", error);
     return new NextResponse("Initial error", { status: 500 });
   }
 }

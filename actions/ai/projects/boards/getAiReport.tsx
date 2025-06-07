@@ -1,3 +1,9 @@
+// actions/ai/projects/boards/getAiReport.tsx
+/*
+This action gets AI report for a specific project board.
+It first finds the user and then finds the board data.
+Then it sends a request to the OpenAI API to get the AI report.
+*/
 "use server";
 
 import axios from "axios";

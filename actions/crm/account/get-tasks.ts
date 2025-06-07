@@ -1,3 +1,8 @@
+// actions/crm/account/get-tasks.ts
+/*
+This action gets all tasks for a specific account.
+It first finds the user and then finds the tasks data.
+*/
 import { prismadb } from "@/lib/prisma";
 
 export const getAccountsTasks = async (accountId: string) => {

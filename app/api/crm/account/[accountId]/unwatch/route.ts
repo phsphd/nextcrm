@@ -1,3 +1,4 @@
+// file: nextcrm/app/api/crm/account/[accountId]/unwatch/route.ts
 import { authOptions } from "@/lib/auth";
 import { prismadb } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -17,20 +18,19 @@ export async function POST(req: Request, props: { params: Promise<{ accountId: s
   const accountId = params.accountId;
 
   try {
-    await prismadb.crm_Accounts.update({
+    // 🔴 MODIFIED: Use junction table instead of disconnect
+    await prismadb.userWatchingAccounts.deleteMany({
       where: {
-        id: accountId,
-      },
-      data: {
-        watching_users: {
-          disconnect: {
-            id: session.user.id,
-          },
-        },
+        userId: session.user.id,
+        accountId: accountId,
       },
     });
-    return NextResponse.json({ message: "Board watched" }, { status: 200 });
+
+    // 🔴 MODIFIED: Fixed success message (was incorrectly saying "Board watched")
+    return NextResponse.json({ message: "Account unwatched" }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.log("[ACCOUNT_UNWATCH_POST]", error);
+    // 🔴 ADDED: Better error response
+    return NextResponse.json({ error: "Failed to unwatch account" }, { status: 500 });
   }
 }

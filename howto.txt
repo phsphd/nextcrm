@@ -1,0 +1,41 @@
+npm install @supabase/supabase-js --legacy-peer-deps
+npm install @supabase/auth-helpers-nextjs --legacy-peer-deps  
+npm install @supabase/auth-helpers-react --legacy-peer-deps
+npm install --legacy-peer-deps
+npx shadcn@latest init
+npm install class-variance-authority clsx tailwind-merge    
+
+
+# Install all missing components at once
+npx shadcn@latest add alert skeleton
+
+# Or install them individually
+npx shadcn@latest add alert
+npx shadcn@latest add skeleton
+
+npx prisma validate
+npx prisma db push
+npx prisma generate
+
+# Generate Prisma client
+npx prisma generate
+
+# Push schema to Supabase
+npx prisma db push
+
+# Optional: Create and run migration
+npx prisma migrate dev --name init
+
+1. High Priority - Core CRM Routes (Must Update)
+app/api/crm/contacts/route.ts ✅ (Already updated)
+app/api/crm/accounts/route.ts 
+app/api/crm/leads/route.ts
+app/api/crm/opportunities/route.ts
+app/api/crm/invoices/route.ts
+2. Medium Priority - Document & Task Routes
+app/api/documents/route.ts
+app/api/tasks/route.ts
+app/api/crm/accounts-tasks/route.ts
+3. Lower Priority - System Routes
+app/api/boards/route.ts
+app/api/users/route.ts (for watching relationships)

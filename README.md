@@ -2,6 +2,7 @@
   <h1 align="center">NextCRM</h1>
 </a>
 
+prisma generate &&  prisma db push && prisma db seed && 
 <p align="center">
 <img alt="OG" src="public/images/opengraph-image.png" />
 </p>
