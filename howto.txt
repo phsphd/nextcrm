@@ -39,3 +39,8 @@ app/api/crm/accounts-tasks/route.ts
 3. Lower Priority - System Routes
 app/api/boards/route.ts
 app/api/users/route.ts (for watching relationships)
+
+
+git add .
+git commit -m "Update howto.txt"
+git push    
